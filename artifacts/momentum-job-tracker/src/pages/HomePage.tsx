@@ -160,63 +160,72 @@ export default function HomePage() {
   const timelineStages: Stage[] = ['applied', 'interview', 'offer', 'wishlist', 'rejected'];
 
   return (
-    <div className="space-y-28 sm:space-y-36 pb-16">
-      <OnboardingModal isOpen={onboardingOpen} onClose={() => setOnboardingOpen(false)} profile={profile} />
+    <div className="relative">
+      {/* 3D Cosmic Object & Interactive Orbit System (Strictly in background behind all letters & cards) */}
+      <CareerObject3D />
 
-      {/* =========================================================================
-          01 — CINEMATIC HERO SECTION
-          ========================================================================= */}
-      <section className="relative pt-6 sm:pt-12 text-center">
-        {/* Subtle Ambient Radial Top Glow */}
-        <div className="pointer-events-none absolute left-1/2 -top-24 -translate-x-1/2 h-[450px] w-full max-w-4xl rounded-full bg-cyan-500/[0.08] blur-[140px]" />
+      {/* Main Content Layer - Explicitly stacked with relative z-10 over the 3D background */}
+      <div className="relative z-10 space-y-28 sm:space-y-36 pb-16">
+        <OnboardingModal isOpen={onboardingOpen} onClose={() => setOnboardingOpen(false)} profile={profile} />
 
-        {/* Large Cinematic Brand Header */}
-        <div className="relative inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-950/30 px-4 py-1 text-[11px] font-mono-ui uppercase tracking-[0.22em] text-cyan-300 backdrop-blur-md">
-          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
-          <span>AI Career Operating System</span>
-        </div>
+        {/* =========================================================================
+            01 — CINEMATIC HERO SECTION
+            ========================================================================= */}
+        <section className="relative z-20 pt-8 sm:pt-14 text-center">
+          {/* Subtle Ambient Radial Top Glow */}
+          <div className="pointer-events-none absolute left-1/2 -top-24 -translate-x-1/2 h-[450px] w-full max-w-4xl rounded-full bg-cyan-500/[0.08] blur-[140px]" />
 
-        {/* Big Cinematic Brand Display Typography */}
-        <div className="mt-4 font-display text-[52px] sm:text-[84px] md:text-[110px] lg:text-[132px] font-black uppercase tracking-[-0.04em] text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-200 to-slate-600/40 select-none leading-none">
-          Momentum
-        </div>
+          {/* Large Cinematic Brand Header */}
+          <div className="relative z-20 inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-[#06101e]/80 px-4 py-1 text-[11px] font-mono-ui uppercase tracking-[0.22em] text-cyan-300 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
+            <span>AI Career Operating System</span>
+          </div>
 
-        {/* Hero Copy */}
-        <h1 className="mt-2 font-display text-[32px] sm:text-[46px] md:text-[54px] font-bold tracking-tight text-slate-100 max-w-3xl mx-auto leading-tight">
-          Your career, <br className="hidden sm:inline" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-teal-200">
-            understood.
-          </span>
-        </h1>
+          {/* Big Cinematic Brand Display Typography */}
+          <div className="relative z-20 mt-4 font-display text-[52px] sm:text-[84px] md:text-[110px] lg:text-[132px] font-black uppercase tracking-[-0.04em] text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-slate-500/60 select-none leading-none drop-shadow-[0_4px_30px_rgba(0,0,0,0.85)]">
+            Momentum
+          </div>
 
-        <p className="mt-4 text-[15px] sm:text-[18px] text-slate-400 max-w-xl mx-auto font-normal leading-relaxed">
-          Stop applying blindly. Understand where you fit, what you&apos;re missing, and what you could become next.
-        </p>
+          {/* Hero Copy */}
+          <h1 className="relative z-20 mt-2 font-display text-[32px] sm:text-[46px] md:text-[54px] font-bold tracking-tight text-white max-w-3xl mx-auto leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
+            Your career, <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-teal-200">
+              understood.
+            </span>
+          </h1>
 
-        {/* Hero CTAs */}
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
-          <Link
-            href="/career-intelligence"
-            className="group flex items-center gap-2.5 rounded-full bg-cyan-500 px-7 py-3 text-[14px] font-bold text-slate-950 shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all hover:bg-cyan-400 hover:scale-[1.02] active:scale-[0.98]"
-          >
-            <span>Explore My Career</span>
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <p className="relative z-20 mt-4 text-[15px] sm:text-[18px] text-slate-200 max-w-xl mx-auto font-normal leading-relaxed drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+            Stop applying blindly. Understand where you fit, what you&apos;re missing, and what you could become next.
+          </p>
 
-          <a
-            href="#section-intro"
-            className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-[14px] font-semibold text-slate-300 backdrop-blur-md transition hover:bg-white/[0.08] hover:text-white"
-          >
-            <span>See How It Works</span>
-            <ArrowDown size={14} className="text-slate-400" />
-          </a>
-        </div>
+          {/* Hero CTAs */}
+          <div className="relative z-20 mt-7 flex flex-wrap items-center justify-center gap-3.5">
+            <Link
+              href="/career-intelligence"
+              className="group flex items-center gap-2.5 rounded-full bg-cyan-500 px-7 py-3 text-[14px] font-bold text-slate-950 shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all hover:bg-cyan-400 hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <span>Explore My Career</span>
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
 
-        {/* Centerpiece Interactive 3D Career Object */}
-        <div className="mt-6 relative">
-          <CareerObject3D />
-        </div>
-      </section>
+            <a
+              href="#section-intro"
+              className="flex items-center gap-2 rounded-full border border-white/15 bg-[#081220]/80 px-6 py-3 text-[14px] font-semibold text-slate-200 backdrop-blur-md transition hover:bg-white/[0.12] hover:text-white shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+            >
+              <span>See How It Works</span>
+              <ArrowDown size={14} className="text-slate-400" />
+            </a>
+          </div>
+
+          {/* Subtle Cosmic Status Indicator */}
+          <div className="relative z-20 mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[12px] font-mono-ui uppercase tracking-wider text-slate-400">
+            <span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-cyan-400" /> 8 Career Intelligence Vectors</span>
+            <span className="hidden sm:inline text-slate-600">•</span>
+            <span className="hidden sm:flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Verifiable Proof Engine</span>
+            <span className="hidden sm:inline text-slate-600">•</span>
+            <span className="hidden sm:flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-sky-400" /> Real-time Market Fit</span>
+          </div>
+        </section>
 
       {/* =========================================================================
           02 — INTRODUCTION: MORE THAN A JOB TRACKER
@@ -986,6 +995,7 @@ export default function HomePage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

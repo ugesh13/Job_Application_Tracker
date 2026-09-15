@@ -15,14 +15,14 @@ interface OrbitNodeData {
 }
 
 const ORBIT_NODES: OrbitNodeData[] = [
-  { id: 'skills', name: 'Skills', category: 'DNA', tooltip: 'Your current technical & transferable capability vectors', angle: 0, radius: 2.7, speed: 0.18, orbitIndex: 0, heightOffset: 0.2 },
-  { id: 'projects', name: 'Projects', category: 'Proof', tooltip: 'Verifiable proof of production engineering & system delivery', angle: 1.2, radius: 2.8, speed: 0.16, orbitIndex: 0, heightOffset: -0.3 },
-  { id: 'experience', name: 'Experience', category: 'Depth', tooltip: 'Track record of technical maturity and feature ownership', angle: 2.5, radius: 2.7, speed: 0.17, orbitIndex: 0, heightOffset: 0.4 },
-  { id: 'opportunities', name: 'Opportunities', category: 'Market', tooltip: 'High-alignment market roles actively seeking your evidence', angle: 0.8, radius: 3.4, speed: 0.12, orbitIndex: 1, heightOffset: 0.5 },
-  { id: 'goals', name: 'Goals', category: 'Direction', tooltip: 'Target engineering trajectories and career milestones', angle: 2.2, radius: 3.5, speed: 0.11, orbitIndex: 1, heightOffset: -0.4 },
-  { id: 'applications', name: 'Applications', category: 'Pipeline', tooltip: 'Live applications, interview stages, and recruiter feedback', angle: 3.8, radius: 3.4, speed: 0.13, orbitIndex: 1, heightOffset: 0.1 },
-  { id: 'growth', name: 'Growth', category: 'Delta', tooltip: 'Simulated capability deltas unlocked by targeted upskilling', angle: 1.8, radius: 4.1, speed: 0.09, orbitIndex: 2, heightOffset: -0.5 },
-  { id: 'insights', name: 'Insights', category: 'Co-Pilot', tooltip: 'Grounded algorithmic intelligence on what you should do next', angle: 4.5, radius: 4.0, speed: 0.10, orbitIndex: 2, heightOffset: 0.6 },
+  { id: 'skills', name: 'Skills', category: 'DNA', tooltip: 'Your current technical & transferable capability vectors', angle: 0, radius: 3.5, speed: 0.16, orbitIndex: 0, heightOffset: 0.2 },
+  { id: 'projects', name: 'Projects', category: 'Proof', tooltip: 'Verifiable proof of production engineering & system delivery', angle: 1.2, radius: 3.6, speed: 0.14, orbitIndex: 0, heightOffset: -0.3 },
+  { id: 'experience', name: 'Experience', category: 'Depth', tooltip: 'Track record of technical maturity and feature ownership', angle: 2.5, radius: 3.5, speed: 0.15, orbitIndex: 0, heightOffset: 0.4 },
+  { id: 'opportunities', name: 'Opportunities', category: 'Market', tooltip: 'High-alignment market roles actively seeking your evidence', angle: 0.8, radius: 4.4, speed: 0.11, orbitIndex: 1, heightOffset: 0.5 },
+  { id: 'goals', name: 'Goals', category: 'Direction', tooltip: 'Target engineering trajectories and career milestones', angle: 2.2, radius: 4.5, speed: 0.10, orbitIndex: 1, heightOffset: -0.4 },
+  { id: 'applications', name: 'Applications', category: 'Pipeline', tooltip: 'Live applications, interview stages, and recruiter feedback', angle: 3.8, radius: 4.4, speed: 0.12, orbitIndex: 1, heightOffset: 0.1 },
+  { id: 'growth', name: 'Growth', category: 'Delta', tooltip: 'Simulated capability deltas unlocked by targeted upskilling', angle: 1.8, radius: 5.2, speed: 0.08, orbitIndex: 2, heightOffset: -0.5 },
+  { id: 'insights', name: 'Insights', category: 'Co-Pilot', tooltip: 'Grounded algorithmic intelligence on what you should do next', angle: 4.5, radius: 5.1, speed: 0.09, orbitIndex: 2, heightOffset: 0.6 },
 ];
 
 export default function CareerObject3D() {
@@ -44,7 +44,7 @@ export default function CareerObject3D() {
 
     // --- Scene Setup ---
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x050b14, 0.045);
+    scene.fog = new THREE.FogExp2(0x050b14, 0.04);
 
     const getViewportWidth = () => window.innerWidth;
     const getViewportHeight = () => window.innerHeight;
@@ -55,7 +55,8 @@ export default function CareerObject3D() {
       0.1,
       100
     );
-    camera.position.set(0, 0.6, 7.8);
+    // Camera positioned with deeper field of view so the 3D crystal forms a graceful backdrop
+    camera.position.set(0, 0.2, 8.8);
 
     const renderer = new THREE.WebGLRenderer({
       canvas,
@@ -303,8 +304,9 @@ export default function CareerObject3D() {
       starField.rotation.x = elapsedTime * 0.008;
 
       // Celestial spin + scroll transformation + cursor reaction
+      // Positioned at y = -0.35 in hero so it sits gracefully behind and below the headlines without obscuring letters
       rootGroup.position.x = currentScrollTransform.x;
-      rootGroup.position.y = currentScrollTransform.y + Math.sin(elapsedTime * 0.9) * 0.08;
+      rootGroup.position.y = currentScrollTransform.y - 0.35 + Math.sin(elapsedTime * 0.9) * 0.08;
       rootGroup.position.z = currentScrollTransform.z;
       rootGroup.scale.setScalar(currentScrollTransform.scale);
 
@@ -379,7 +381,6 @@ export default function CareerObject3D() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
 
-      // Dispose Three.js resources
       glassGeo.dispose();
       glassMat.dispose();
       edgesGeo.dispose();
@@ -397,86 +398,78 @@ export default function CareerObject3D() {
     <>
       {/* 
         Fixed Full-Viewport 3D Canvas
-        Spans the entire webpage, persistent across all sections as user scrolls
+        Strictly positioned in background (-z-10), behind all content, letters, and cards across all sections
       */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden w-screen h-screen">
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden w-screen h-screen">
         <canvas
           ref={canvasRef}
           className="absolute inset-0 h-full w-full pointer-events-none"
         />
 
         {/* Cinematic Atmospheric Ambient Radiance */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(6,182,212,0.09),transparent_65%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(6,182,212,0.1),transparent_70%)]" />
         <div className="pointer-events-none absolute top-1/4 -left-32 h-[500px] w-[500px] rounded-full bg-cyan-500/08 blur-[160px]" />
         <div className="pointer-events-none absolute top-2/3 -right-32 h-[600px] w-[600px] rounded-full bg-blue-600/08 blur-[180px]" />
+      </div>
 
-        {/* Interactive 2D Screen Space Node Labels (Responsive to scroll fade) */}
-        {heroLabelOpacity > 0.05 && (
-          <div
-            style={{ opacity: heroLabelOpacity }}
-            className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-200"
-          >
-            {ORBIT_NODES.map((node) => {
-              const pos = screenPositions[node.id];
-              if (!pos || !pos.visible) return null;
+      {/* Interactive 2D Screen Space Orbit Labels (Strictly placed at z-0, behind hero text and all page content) */}
+      {heroLabelOpacity > 0.05 && (
+        <div
+          style={{ opacity: heroLabelOpacity }}
+          className="pointer-events-none fixed inset-0 z-0 overflow-hidden w-screen h-screen transition-opacity duration-200"
+        >
+          {ORBIT_NODES.map((node) => {
+            const pos = screenPositions[node.id];
+            if (!pos || !pos.visible) return null;
 
-              const isHovered = activeHoverNode?.id === node.id;
+            const isHovered = activeHoverNode?.id === node.id;
 
-              return (
+            return (
+              <div
+                key={node.id}
+                style={{
+                  transform: `translate3d(${pos.x}px, ${pos.y}px, 0px) translate(-50%, -50%)`,
+                }}
+                className="pointer-events-auto absolute transition-transform duration-75"
+              >
                 <div
-                  key={node.id}
-                  style={{
-                    transform: `translate3d(${pos.x}px, ${pos.y}px, 0px) translate(-50%, -50%)`,
-                  }}
-                  className="pointer-events-auto absolute transition-transform duration-75"
+                  onMouseEnter={() => setActiveHoverNode(node)}
+                  onMouseLeave={() => setActiveHoverNode(null)}
+                  className="group relative cursor-pointer"
                 >
+                  {/* Node Pill */}
                   <div
-                    onMouseEnter={() => setActiveHoverNode(node)}
-                    onMouseLeave={() => setActiveHoverNode(null)}
-                    className="group relative cursor-pointer"
+                    className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium tracking-wide backdrop-blur-md transition-all duration-200 ${
+                      isHovered
+                        ? 'bg-cyan-500/30 text-white border border-cyan-400/60 shadow-[0_0_20px_rgba(34,211,238,0.4)] scale-110'
+                        : 'bg-[#081220]/80 text-slate-300 border border-white/10 hover:border-cyan-500/40 hover:text-cyan-200'
+                    }`}
                   >
-                    {/* Node Pill */}
-                    <div
-                      className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium tracking-wide backdrop-blur-md transition-all duration-200 ${
-                        isHovered
-                          ? 'bg-cyan-500/25 text-white border border-cyan-400/60 shadow-[0_0_20px_rgba(34,211,238,0.4)] scale-110'
-                          : 'bg-[#081220]/75 text-slate-300 border border-white/10 hover:border-cyan-500/40 hover:text-cyan-200'
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full transition-colors ${
+                        isHovered ? 'bg-white shadow-[0_0_8px_#ffffff]' : 'bg-cyan-400'
                       }`}
-                    >
-                      <span
-                        className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                          isHovered ? 'bg-white shadow-[0_0_8px_#ffffff]' : 'bg-cyan-400'
-                        }`}
-                      />
-                      <span>{node.name}</span>
-                    </div>
-
-                    {/* Hover Contextual Tooltip */}
-                    {isHovered && (
-                      <div className="absolute left-1/2 bottom-full mb-2.5 w-52 -translate-x-1/2 rounded-xl bg-[#06101e]/95 p-3 text-left shadow-[0_12px_35px_rgba(0,0,0,0.8)] border border-cyan-500/30 backdrop-blur-xl transition-all duration-200 z-30 pointer-events-none">
-                        <div className="flex items-center justify-between text-[10px] font-mono-ui uppercase tracking-wider text-cyan-400">
-                          <span>{node.category} Vector</span>
-                          <Sparkles size={11} />
-                        </div>
-                        <div className="mt-1 font-bold text-[13px] text-slate-100">{node.name}</div>
-                        <p className="mt-1 text-[11px] leading-relaxed text-slate-300">{node.tooltip}</p>
-                      </div>
-                    )}
+                    />
+                    <span>{node.name}</span>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
 
-      {/* Hero Focal Staging Indicator (Gives clear visual interaction prompt in Hero section) */}
-      <div className="relative flex h-[380px] sm:h-[460px] lg:h-[520px] w-full items-end justify-center pointer-events-none pb-4">
-        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#07111e]/70 px-4 py-1.5 text-[11px] text-slate-300 backdrop-blur-xl shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
-          <span>Interactive 3D Career Object · Move cursor to orbit · Scroll to explore</span>
+                  {/* Hover Contextual Tooltip */}
+                  {isHovered && (
+                    <div className="absolute left-1/2 bottom-full mb-2.5 w-52 -translate-x-1/2 rounded-xl bg-[#06101e]/95 p-3 text-left shadow-[0_12px_35px_rgba(0,0,0,0.8)] border border-cyan-500/30 backdrop-blur-xl transition-all duration-200 z-30 pointer-events-none">
+                      <div className="flex items-center justify-between text-[10px] font-mono-ui uppercase tracking-wider text-cyan-400">
+                        <span>{node.category} Vector</span>
+                        <Sparkles size={11} />
+                      </div>
+                      <div className="mt-1 font-bold text-[13px] text-slate-100">{node.name}</div>
+                      <p className="mt-1 text-[11px] leading-relaxed text-slate-300">{node.tooltip}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </div>
+      )}
     </>
   );
 }
