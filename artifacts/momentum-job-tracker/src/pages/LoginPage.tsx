@@ -68,8 +68,32 @@ export default function LoginPage() {
         </p>
 
         {error && (
-          <div className="mt-4 p-3 w-full rounded bg-destructive/10 text-destructive text-sm text-left">
-            {error}
+          <div className="mt-4 p-4 w-full rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm text-left">
+            <p className="font-semibold text-[13px] mb-1">
+              {error.includes("billing-not-enabled")
+                ? "SMS Billing Restricted (Firebase Spark Plan)"
+                : "Authentication Notice"}
+            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              {error.includes("billing-not-enabled")
+                ? "Google requires a paid Blaze plan to deliver real SMS messages. On the free Spark plan, you can either use Google Sign-In or set up a free Test Phone Number in Firebase Console."
+                : error}
+            </p>
+            {error.includes("billing-not-enabled") && (
+              <div className="mt-3 flex flex-col gap-2 pt-2 border-t border-destructive/20">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPhoneMode(false);
+                    setError("");
+                    signInWithGoogle();
+                  }}
+                  className="text-xs font-medium text-primary hover:underline text-left"
+                >
+                  → Switch to Google Sign-In (Instant & Free)
+                </button>
+              </div>
+            )}
           </div>
         )}
 
@@ -158,7 +182,9 @@ export default function LoginPage() {
                     className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                     required
                   />
-                  <p className="text-xs text-muted-foreground">Include your country code (e.g. +1).</p>
+                  <p className="text-xs text-muted-foreground">
+                    Include your country code (e.g. +91). On Firebase free tier, use a configured test number (e.g. +91 9999999999) or Google sign-in.
+                  </p>
                 </div>
                 
                 {/* Firebase Recaptcha Container */}
