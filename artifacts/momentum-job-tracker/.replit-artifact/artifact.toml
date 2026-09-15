@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Momentum Job Tracker"
+description = "A calm, action-oriented job search workspace for high-volume applicants. Track jobs, discover roles, and always know the next move for every application."
+version = "1.0.0"
+id = "artifacts/momentum-job-tracker"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22019
+
+[services.development]
+run = "pnpm --filter @workspace/momentum-job-tracker run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/momentum-job-tracker", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/momentum-job-tracker/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22019"
+BASE_PATH = "/"

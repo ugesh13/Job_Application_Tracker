@@ -1,0 +1,75 @@
+I want you to build a complete job tracking and job search application with both backend and frontend. Use the Naukri app as the primary reference for UI/UX patterns, features, and user workflows.
+
+**Core Requirements:**
+
+Build a full-stack application that includes all fundamental features found in professional job tracking and search platforms:
+- Job search and filtering (by location, industry, salary, experience level, job type)
+- Job listings display with detailed job cards
+- User authentication and profile management
+- Job application tracking (saved jobs, applied jobs, interview status)
+- User dashboard showing application statistics and job recommendations
+- Job alerts and notifications
+- Company profiles with job postings
+- Advanced search and sorting options
+
+**Frontend:**
+- Create a modern, responsive UI/UX that mirrors Naukri's design patterns and information architecture
+- Ensure intuitive navigation and clear visual hierarchy
+- Implement smooth interactions and user flows
+- Use contemporary design principles for accessibility and usability
+
+**Backend:**
+- Design RESTful APIs to support all frontend features
+- Implement proper database schema for users, jobs, applications, and companies
+- Add authentication and authorization
+- Build filtering, search, and sorting logic
+- Create necessary endpoints for CRUD operations
+
+**Beyond Basics — Add Unique Enhancements:**
+Identify and implement 3-5 innovative features or UX improvements that would differentiate this app from standard job trackers. These could include:
+- Unique personalization or recommendation systems
+- Competitive intelligence or market insights
+- Enhanced candidate experience or application workflow
+- Data visualization or analytics features
+- Networking or community elements
+- Any other ideas you believe would meaningfully improve the product
+
+Include these unique features in both the frontend design and backend architecture.
+
+**Deliverables:**
+- Complete frontend code (specify your technology stack choice)
+- Complete backend code (specify your technology stack choice)
+- Database schema
+- API documentation
+- Brief explanation of unique features added and why they improve the product
+
+Build this as production-ready code with proper structure, error handling, and scalability in mind.
+
+
+I am building a Job Application Tracker with a Kanban-style interface that uses status transitions (Applied → Interview → Offer/Rejected). I need strategic and design guidance to differentiate this product in a crowded market.
+
+Please help me think through:
+
+**Market Differentiation & Core Idea**
+I've researched existing tools (Teal, Huntr, Simplify, Notion, Google Sheets). Each owns a segment—all-in-one, visual Kanban, autofill automation, customization, simplicity. What should be our unique angle and guiding philosophy? What specific job seeker pain point or workflow gap can we own that these tools don't fully solve? Frame this as a clear mission or motto that will guide our product.
+
+**Feature Innovation**
+Given the competitive landscape, what features or capabilities would genuinely differentiate our tracker? Consider:
+- What workflows do existing tools miss or do poorly?
+- What would make a job seeker choose us over Huntr's Kanban or Notion's flexibility?
+- Are there adjacent problems we could solve (networking, interview prep, salary negotiation, follow-up reminders)?
+- Should we specialize in a specific user type (high-volume applicants, career changers, first-time job seekers)?
+
+**User Interface & Experience**
+Imagine our website 2–3 years from now, fully realized. Describe:
+- The core visual design and layout—how do we present the Kanban board in a way that feels intuitive and delightful?
+- What's the user's first-time experience? How do they add a job, move it between statuses, and see their progress?
+- How do we display job details, notes, deadlines, and next steps without cluttering the board?
+- What information hierarchy matters most?
+
+**Strategic Positioning**
+Based on your differentiation, what should be our core motto or positioning statement? This should be a short, compelling statement that explains why someone should use our tracker instead of the alternatives—something that resonates with job seekers' actual frustrations or goals.
+
+Help me crystallize the vision so I know exactly what to build and why it matters.
+
+Use all the refrences u needed to build it. but build perfectly and asthetically.

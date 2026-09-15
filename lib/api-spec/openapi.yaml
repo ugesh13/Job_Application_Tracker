@@ -1,0 +1,830 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: jobs
+    description: Job search and application tracking
+  - name: dashboard
+    description: Momentum and progress insights
+  - name: profile
+    description: Personal profile settings
+  - name: alerts
+    description: Saved job alerts
+  - name: skills
+    description: User skills management
+  - name: projects
+    description: User projects management
+  - name: ai
+    description: AI career intelligence and scoring
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /jobs:
+    get:
+      operationId: listJobs
+      tags: [jobs]
+      summary: List jobs and applications
+      parameters:
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: location
+          schema: { type: string }
+        - in: query
+          name: industry
+          schema: { type: string }
+        - in: query
+          name: salaryMin
+          schema: { type: integer }
+        - in: query
+          name: experienceLevel
+          schema: { type: string }
+        - in: query
+          name: jobType
+          schema: { type: string }
+        - in: query
+          name: sort
+          schema: { type: string, enum: [recent, salary, relevance] }
+        - in: query
+          name: savedOnly
+          schema: { type: boolean }
+      responses:
+        "200":
+          description: Jobs matching the search filters
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Job" }
+    post:
+      operationId: createJob
+      tags: [jobs]
+      summary: Add a job to the tracker
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/JobInput" }
+      responses:
+        "201":
+          description: Created job
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Job" }
+  /jobs/{id}:
+    get:
+      operationId: getJob
+      tags: [jobs]
+      summary: Get a job
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        "200":
+          description: Job details
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Job" }
+        "404": { description: Job not found }
+    patch:
+      operationId: updateJob
+      tags: [jobs]
+      summary: Update a tracked job
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/JobUpdate" }
+      responses:
+        "200":
+          description: Updated job
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Job" }
+    delete:
+      operationId: deleteJob
+      tags: [jobs]
+      summary: Remove a job from the tracker
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        "204": { description: Deleted }
+  /jobs/{id}/fit-score:
+    get:
+      operationId: getJobFitScore
+      tags: [jobs, ai]
+      summary: Get job fit score, match breakdown, and recommendations
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        "200":
+          description: Job fit score and skill breakdown
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/FitScore" }
+        "404": { description: Job not found }
+  /dashboard:
+    get:
+      operationId: getDashboard
+      tags: [dashboard]
+      summary: Get dashboard metrics and momentum insights
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Dashboard" }
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [profile]
+      summary: Get the current profile
+      responses:
+        "200":
+          description: Current profile
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Profile" }
+    patch:
+      operationId: updateProfile
+      tags: [profile]
+      summary: Update the current profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProfileUpdate" }
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Profile" }
+  /alerts:
+    get:
+      operationId: listAlerts
+      tags: [alerts]
+      summary: List saved job alerts
+      responses:
+        "200":
+          description: Saved job alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Alert" }
+    post:
+      operationId: createAlert
+      tags: [alerts]
+      summary: Create a job alert
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AlertInput" }
+      responses:
+        "201":
+          description: Created alert
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Alert" }
+  /skills:
+    get:
+      operationId: listSkills
+      tags: [skills]
+      summary: List user skills
+      responses:
+        "200":
+          description: List of skills
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Skill" }
+    post:
+      operationId: createSkill
+      tags: [skills]
+      summary: Add a skill
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SkillInput" }
+      responses:
+        "201":
+          description: Created skill
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Skill" }
+  /skills/{id}:
+    delete:
+      operationId: deleteSkill
+      tags: [skills]
+      summary: Delete a skill
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        "204": { description: Deleted }
+  /projects:
+    get:
+      operationId: listProjects
+      tags: [projects]
+      summary: List user portfolio projects
+      responses:
+        "200":
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Project" }
+    post:
+      operationId: createProject
+      tags: [projects]
+      summary: Add a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProjectInput" }
+      responses:
+        "201":
+          description: Created project
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Project" }
+  /projects/{id}:
+    patch:
+      operationId: updateProject
+      tags: [projects]
+      summary: Update a project
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProjectInput" }
+      responses:
+        "200":
+          description: Updated project
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Project" }
+    delete:
+      operationId: deleteProject
+      tags: [projects]
+      summary: Delete a project
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        "204": { description: Deleted }
+  /jobs/{id}/truth-layer:
+    get:
+      operationId: getJobTruthLayer
+      tags: [jobs, ai]
+      summary: Deconstruct job posting into Core, Secondary, Inferred requirements and recruiter perspective
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        "200":
+          description: Truth layer analysis
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/JobTruthLayer" }
+        "404": { description: Job not found }
+  /career/twin:
+    get:
+      operationId: getCareerTwin
+      tags: [ai]
+      summary: Get user Career Digital Twin and Skill DNA
+      responses:
+        "200":
+          description: Career Twin and Skill DNA
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CareerTwin" }
+  /career/time-machine:
+    post:
+      operationId: simulateTimeMachine
+      tags: [ai]
+      summary: Simulate what-if career shifts and skill additions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/TimeMachineInput" }
+      responses:
+        "200":
+          description: Simulation results
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TimeMachineResult" }
+  /career/reverse-search:
+    get:
+      operationId: getReverseJobSearch
+      tags: [ai]
+      summary: Reverse job search based on existing evidence
+      responses:
+        "200":
+          description: Discovered career directions
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReverseSearchResult" }
+  /career/opportunity-graph:
+    get:
+      operationId: getOpportunityGraph
+      tags: [ai]
+      summary: Relationship graph of skills and career directions
+      responses:
+        "200":
+          description: Opportunity graph
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OpportunityGraph" }
+  /career/agent/chat:
+    post:
+      operationId: chatCareerAgent
+      tags: [ai]
+      summary: Chat with contextual career agent grounded in evidence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/CareerAgentInput" }
+      responses:
+        "200":
+          description: Career agent response
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CareerAgentResponse" }
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    Job:
+      type: object
+      required: [id, title, company, location, stage, nextAction, nextActionDate, postedAt, appliedAt, daysInStage, salary, experienceLevel, jobType, industry, saved, companyColor]
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        company: { type: string }
+        location: { type: string }
+        stage: { type: string, enum: [wishlist, applied, interview, offer, rejected] }
+        nextAction: { type: string }
+        nextActionDate: { type: string }
+        postedAt: { type: string }
+        appliedAt: { type: ["string", "null"] }
+        daysInStage: { type: integer }
+        salary: { type: string }
+        experienceLevel: { type: string }
+        jobType: { type: string }
+        industry: { type: string }
+        saved: { type: boolean }
+        companyColor: { type: string }
+        companyInitials: { type: string }
+        description: { type: ["string", "null"] }
+        url: { type: ["string", "null"] }
+        notes: { type: ["string", "null"] }
+        contact: { type: ["string", "null"] }
+        recruiterName: { type: ["string", "null"] }
+        recruiterEmail: { type: ["string", "null"] }
+        interviewDate: { type: ["string", "null"] }
+        followUpDate: { type: ["string", "null"] }
+        resumeVersion: { type: ["string", "null"] }
+        skillsRequired:
+          type: array
+          items: { type: string }
+    JobInput:
+      type: object
+      required: [title, company, location, stage]
+      properties:
+        title: { type: string, minLength: 1 }
+        company: { type: string, minLength: 1 }
+        location: { type: string }
+        stage: { type: string, enum: [wishlist, applied, interview, offer, rejected] }
+        nextAction: { type: string }
+        nextActionDate: { type: string }
+        salary: { type: string }
+        experienceLevel: { type: string }
+        jobType: { type: string }
+        industry: { type: string }
+        saved: { type: boolean }
+        description: { type: string }
+        url: { type: string }
+        notes: { type: string }
+        contact: { type: string }
+        recruiterName: { type: string }
+        recruiterEmail: { type: string }
+        interviewDate: { type: string }
+        followUpDate: { type: string }
+        resumeVersion: { type: string }
+        skillsRequired:
+          type: array
+          items: { type: string }
+    JobUpdate:
+      type: object
+      properties:
+        title: { type: string }
+        company: { type: string }
+        location: { type: string }
+        stage: { type: string, enum: [wishlist, applied, interview, offer, rejected] }
+        nextAction: { type: string }
+        nextActionDate: { type: string }
+        salary: { type: string }
+        experienceLevel: { type: string }
+        jobType: { type: string }
+        industry: { type: string }
+        saved: { type: boolean }
+        description: { type: string }
+        url: { type: string }
+        notes: { type: string }
+        contact: { type: string }
+        recruiterName: { type: string }
+        recruiterEmail: { type: string }
+        interviewDate: { type: string }
+        followUpDate: { type: string }
+        resumeVersion: { type: string }
+        skillsRequired:
+          type: array
+          items: { type: string }
+    Dashboard:
+      type: object
+      required: [applicationsSent, responseRate, interviews, averageDays, needsAction, weekSeries, activity]
+      properties:
+        applicationsSent: { type: integer }
+        responseRate: { type: number }
+        interviews: { type: integer }
+        averageDays: { type: number }
+        needsAction: { type: integer }
+        weekSeries:
+          type: array
+          items:
+            type: object
+            required: [label, applications, interviews]
+            properties:
+              label: { type: string }
+              applications: { type: integer }
+              interviews: { type: integer }
+        activity:
+          type: array
+          items:
+            type: object
+            required: [id, text, time, tone]
+            properties:
+              id: { type: integer }
+              text: { type: string }
+              time: { type: string }
+              tone: { type: string }
+    Profile:
+      type: object
+      required: [id, name, email, role, targetRole, location, avatarColor, initials]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        email: { type: string }
+        role: { type: string }
+        targetRole: { type: string }
+        location: { type: string }
+        avatarColor: { type: string }
+        initials: { type: string }
+        education: { type: ["string", "null"] }
+        experienceYears: { type: integer }
+        careerGoal: { type: ["string", "null"] }
+        bio: { type: ["string", "null"] }
+    ProfileUpdate:
+      type: object
+      properties:
+        name: { type: string }
+        email: { type: string }
+        role: { type: string }
+        targetRole: { type: string }
+        location: { type: string }
+        avatarColor: { type: string }
+        education: { type: string }
+        experienceYears: { type: integer }
+        careerGoal: { type: string }
+        bio: { type: string }
+    Skill:
+      type: object
+      required: [id, name, proficiency, yearsExperience]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        proficiency: { type: string, enum: [beginner, intermediate, advanced, expert] }
+        yearsExperience: { type: integer }
+    SkillInput:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, minLength: 1 }
+        proficiency: { type: string, enum: [beginner, intermediate, advanced, expert] }
+        yearsExperience: { type: integer }
+    Project:
+      type: object
+      required: [id, name, skills, createdAt]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        description: { type: ["string", "null"] }
+        url: { type: ["string", "null"] }
+        skills:
+          type: array
+          items: { type: string }
+        startDate: { type: ["string", "null"] }
+        endDate: { type: ["string", "null"] }
+        createdAt: { type: string }
+    ProjectInput:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, minLength: 1 }
+        description: { type: string }
+        url: { type: string }
+        skills:
+          type: array
+          items: { type: string }
+        startDate: { type: string }
+        endDate: { type: string }
+    FitScore:
+      type: object
+      required: [jobId, overallScore, recommendation, matchingSkills, missingSkills, improvementTips]
+      properties:
+        jobId: { type: integer }
+        overallScore: { type: integer }
+        recommendation: { type: string }
+        matchingSkills:
+          type: array
+          items: { type: string }
+        missingSkills:
+          type: array
+          items: { type: string }
+        matchingProjects:
+          type: array
+          items:
+            type: object
+            required: [id, name, matchScore, matchingSkills]
+            properties:
+              id: { type: integer }
+              name: { type: string }
+              matchScore: { type: integer }
+              matchingSkills:
+                type: array
+                items: { type: string }
+        improvementTips:
+          type: array
+          items: { type: string }
+        readinessScore: { type: integer }
+    Alert:
+      type: object
+      required: [id, query, location, frequency, active, matchCount]
+      properties:
+        id: { type: integer }
+        query: { type: string }
+        location: { type: string }
+        frequency: { type: string }
+        active: { type: boolean }
+        matchCount: { type: integer }
+    AlertInput:
+      type: object
+      required: [query, location]
+      properties:
+        query: { type: string }
+        location: { type: string }
+        frequency: { type: string }
+        active: { type: boolean }
+    CareerTwin:
+      type: object
+      required: [userId, profile, skillDNA, evidence, emergingIdentity, provenance]
+      properties:
+        userId: { type: string }
+        profile: { $ref: "#/components/schemas/Profile" }
+        skillDNA:
+          type: object
+          required: [categories, strongestCombination, crossDomainInsight, developingAreas]
+          properties:
+            categories:
+              type: array
+              items:
+                type: object
+                required: [name, score, level, skills]
+                properties:
+                  name: { type: string }
+                  score: { type: integer }
+                  level: { type: string }
+                  skills:
+                    type: array
+                    items: { type: string }
+            strongestCombination: { type: string }
+            crossDomainInsight: { type: string }
+            developingAreas:
+              type: array
+              items: { type: string }
+        evidence:
+          type: array
+          items:
+            type: object
+            required: [skill, provenBy, status]
+            properties:
+              skill: { type: string }
+              provenBy:
+                type: array
+                items: { type: string }
+              status: { type: string, enum: [verified, claimed_only] }
+        emergingIdentity:
+          type: object
+          required: [primary, secondary, developing, evidenceList]
+          properties:
+            primary: { type: string }
+            secondary: { type: string }
+            developing: { type: string }
+            evidenceList:
+              type: array
+              items: { type: string }
+        provenance:
+          type: object
+          required: [userProvidedCount, verifiedCount, inferredCount]
+          properties:
+            userProvidedCount: { type: integer }
+            verifiedCount: { type: integer }
+            inferredCount: { type: integer }
+    TimeMachineInput:
+      type: object
+      required: [additionalSkills]
+      properties:
+        additionalSkills:
+          type: array
+          items: { type: string }
+        targetDirection: { type: string }
+    TimeMachineResult:
+      type: object
+      required: [simulatedDNA, newlyUnlockedCapabilities, potentialDirections, suggestedLearningPath, disclaimer]
+      properties:
+        simulatedDNA:
+          type: array
+          items:
+            type: object
+            required: [name, currentScore, simulatedScore, delta]
+            properties:
+              name: { type: string }
+              currentScore: { type: integer }
+              simulatedScore: { type: integer }
+              delta: { type: integer }
+        newlyUnlockedCapabilities:
+          type: array
+          items: { type: string }
+        potentialDirections:
+          type: array
+          items: { type: string }
+        suggestedLearningPath:
+          type: array
+          items: { type: string }
+        disclaimer: { type: string }
+    ReverseSearchResult:
+      type: object
+      required: [directions]
+      properties:
+        directions:
+          type: array
+          items:
+            type: object
+            required: [title, matchLevel, whyDiscovered, supportingEvidence, potentialRoles]
+            properties:
+              title: { type: string }
+              matchLevel: { type: string }
+              whyDiscovered: { type: string }
+              supportingEvidence:
+                type: array
+                items: { type: string }
+              potentialRoles:
+                type: array
+                items: { type: string }
+    OpportunityGraph:
+      type: object
+      required: [nodes, edges]
+      properties:
+        nodes:
+          type: array
+          items:
+            type: object
+            required: [id, label, category, level]
+            properties:
+              id: { type: string }
+              label: { type: string }
+              category: { type: string }
+              level: { type: string }
+        edges:
+          type: array
+          items:
+            type: object
+            required: [source, target, relationship]
+            properties:
+              source: { type: string }
+              target: { type: string }
+              relationship: { type: string }
+    JobTruthLayer:
+      type: object
+      required: [jobId, coreRequirements, secondaryRequirements, niceToHave, aiInferredCompetencies, strategies, recruiterPerspective, whatIfIDontApply]
+      properties:
+        jobId: { type: integer }
+        coreRequirements:
+          type: array
+          items: { type: string }
+        secondaryRequirements:
+          type: array
+          items: { type: string }
+        niceToHave:
+          type: array
+          items: { type: string }
+        aiInferredCompetencies:
+          type: array
+          items:
+            type: object
+            required: [competency, inferredFrom, disclaimer]
+            properties:
+              competency: { type: string }
+              inferredFrom: { type: string }
+              disclaimer: { type: string }
+        strategies:
+          type: array
+          items:
+            type: object
+            required: [id, name, alignmentScore, readinessLevel, pros, cons, recommended]
+            properties:
+              id: { type: string }
+              name: { type: string }
+              alignmentScore: { type: integer }
+              readinessLevel: { type: string }
+              pros: { type: string }
+              cons: { type: string }
+              recommended: { type: boolean }
+        recruiterPerspective:
+          type: object
+          required: [firstImpression, perceivedEvidenceStrength, likelyQuestions, improvementAdvice]
+          properties:
+            firstImpression: { type: string }
+            perceivedEvidenceStrength: { type: string }
+            likelyQuestions:
+              type: array
+              items: { type: string }
+            improvementAdvice:
+              type: array
+              items: { type: string }
+        whatIfIDontApply:
+          type: object
+          required: [marketAlternativesCount, uniquenessAssessment, skillOverlapInsight]
+          properties:
+            marketAlternativesCount: { type: integer }
+            uniquenessAssessment: { type: string }
+            skillOverlapInsight: { type: string }
+    CareerAgentInput:
+      type: object
+      required: [message]
+      properties:
+        message: { type: string }
+        history:
+          type: array
+          items:
+            type: object
+            required: [role, content]
+            properties:
+              role: { type: string }
+              content: { type: string }
+    CareerAgentResponse:
+      type: object
+      required: [reply, groundedEvidence, suggestedQuestions]
+      properties:
+        reply: { type: string }
+        groundedEvidence:
+          type: array
+          items: { type: string }
+        suggestedQuestions:
+          type: array
+          items: { type: string }
+

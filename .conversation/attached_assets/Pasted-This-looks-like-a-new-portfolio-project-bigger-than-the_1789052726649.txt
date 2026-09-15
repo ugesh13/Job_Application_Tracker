@@ -1,0 +1,67 @@
+This looks like a new portfolio project (bigger than the URL shortener). Good — this is a strategy/design thinking exercise, not a build request yet, so let me give you the real thing: a sharp, opinionated point of view rather than a menu of options.
+
+1. Market Differentiation & Core Idea
+
+Here's the pattern across the tools you named: they all optimize for logging the application, not for winning the job. Teal, Huntr, Simplify — even with autofill and Kanban — are essentially glorified CRMs for a process the user doesn't control. You move a card from "Applied" to "Interview" not because you did anything, but because someone else replied. The tracker becomes a graveyard of "Applied" cards with no forward motion, and the user's actual pain — silence, uncertainty, and not knowing what to do next — goes untouched.
+
+The gap: no tool treats a stalled application as a solvable problem. They treat status as a passive record. Nobody treats status as a trigger for action.
+
+Guiding philosophy: A tracker should tell you what to do next, not just where things stand.
+
+Working motto: "Don't just track your applications. Move them."
+
+Or sharper: "Every card should have a next move."
+
+This reframes the product from system of record → system of momentum. That's your wedge, and it's defensible because it's a philosophy, not a feature — hard for Huntr to copy without becoming a different product.
+
+2. Feature Innovation
+
+Build everything around one core object: the Next Action. Every card, at every stage, must have one visible, dated next step — not optional, structural.
+
+Table-stakes gaps in existing tools:
+
+Huntr/Teal: great Kanban, weak on why a card is stuck — no aging signal, no nudge
+Notion: infinitely flexible, but flexibility = a blank page problem for anxious job seekers who don't want to design their own system
+Simplify: excellent autofill, but autofill solves applying faster, not the 3 weeks of silence after
+Sheets: zero structure, zero reminders, pure manual labor
+
+Differentiating features, in priority order:
+
+Stale-card detection. Any card sitting in "Applied" past a threshold (e.g., 10 days, user-configurable) visually decays or surfaces in a "Needs a Move" queue — with a suggested action ("send a follow-up," "find a referral," "mark as ghosted"). This alone is your headline feature.
+Next Action as a required field, not a note. Every card shows a next step + due date on its face. The board becomes a to-do list disguised as a Kanban.
+Follow-up sequencing. When you apply, the tool proposes a lightweight cadence (e.g., day 7 follow-up, day 14 check networking angle) — not aggressive automation, just a nudge system so nothing dies from neglect.
+Networking-as-a-stage, not an afterthought. A lot of job search success comes from referrals, not cold applications. Give "Find a connection at this company" its own visible action type tied to the card, not a separate app.
+Lightweight interview prep tied to the card. When a card moves to "Interview," auto-surface a mini prep checklist (research notes field, common questions for the role type, a "what to ask them" prompt) — not a full prep suite, just enough that the tracker becomes the last place you look before a call.
+Outcome-linked reflection. When a card moves to "Rejected," a 10-second optional prompt: "Any feedback given? What would you do differently?" Over time this builds the user's own pattern-recognition — "I get more callbacks when I tailor my resume" — which no competitor surfaces.
+
+Should you specialize in a user type? Yes — pick high-volume applicants (early-career / career changers doing 5–15 applications/week), not because it's the biggest segment but because it's the one where momentum-loss is the actual failure mode. Polished senior candidates doing 3 applications/month don't need a decay system; volume applicants drowning in 40 open cards desperately do. Niching here also sharpens your UI decisions (bulk actions, fast add, minimal friction per card) rather than trying to be all things.
+
+3. UI & UX, 2–3 Years Out
+
+Visual language: Calm, low-anxiety, almost the opposite of a "grind" productivity tool. Job searching is already stressful — the UI shouldn't add urgency-red everywhere. Use a muted, warm palette; reserve strong color only for the "needs action" signal so it actually means something when it appears.
+
+Board layout: Standard 4–5 column Kanban (Wishlist → Applied → Interview → Offer/Rejected), but each card is compact by default — company logo, role, days-in-stage, and a single-line Next Action with due date. That's it. Everything else (notes, contacts, JD, salary range, interview rounds) lives behind a click, in a slide-over panel, never on the board itself. The board's job is scannability, not storage.
+
+Aging indicator: A thin colored edge or dot on the card — green (fresh), amber (approaching stale threshold), a soft red-orange (needs attention) — so a user can look at 30 cards and know in two seconds which 3 need them today.
+
+First-time experience:
+
+Add a job via a single URL paste (parse title/company from the link) or manual quick-add — under 15 seconds, no forced field.
+The moment a card is created, the tool asks one thing: "What's your first move?" — defaulting to "Wait for response, follow up in 7 days" so there's zero friction, but the concept of Next Action is taught in the very first interaction.
+Moving a card is drag-and-drop, and moving to "Interview" or "Offer" triggers a small, genuine celebratory moment (not confetti overkill — something understated and human) because job searching gets so few wins acknowledged.
+
+Information hierarchy on the card face, top to bottom: Company + role (identity) → stage + days-in-stage (status) → Next Action + due date (the whole point) → everything else hidden until opened.
+
+Dashboard/home view above the board: A small weekly summary — applications sent, response rate, interviews landed, average time-in-stage — so the user sees progress as a trend, not just a static board. This is what turns "I've sent 40 applications into the void" into "my response rate improved 3 points this month," which is a completely different emotional experience of the same underlying data.
+
+4. Positioning Statement
+
+Combining the philosophy and the audience:
+
+"The job tracker that tells you what to do next — not just where you stand."
+
+Or, more emotionally tuned to the actual frustration (silence, drift, no feedback loop):
+
+"Stop waiting. Start moving. A tracker built for momentum, not just memory."
+
+Either works as your homepage headline. The test for every future feature: does this help someone move a stalled application forward, or is it just another way to record that it's stalled? If it's the latter, you're building Huntr. If it's the former, you're building something they aren't.
