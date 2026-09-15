@@ -1,6 +1,6 @@
 {
-  "buildCommand": "pnpm run build",
-  "outputDirectory": "artifacts/momentum-job-tracker/dist/public",
+  "buildCommand": "pnpm run build && cp -r artifacts/momentum-job-tracker/dist/public dist",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",
