@@ -101,7 +101,14 @@ export default function LoginPage() {
           <div className="mt-8 flex w-full flex-col gap-3">
             <button
               type="button"
-              onClick={signInWithGoogle}
+              onClick={async () => {
+                setError("");
+                try {
+                  await signInWithGoogle();
+                } catch (err: any) {
+                  setError(err.message || "Failed to sign in with Google.");
+                }
+              }}
               className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-card px-5 py-4 text-[14px] font-semibold text-foreground transition-colors hover:bg-muted"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
@@ -128,7 +135,14 @@ export default function LoginPage() {
 
             <button
               type="button"
-              onClick={signInWithGithub}
+              onClick={async () => {
+                setError("");
+                try {
+                  await signInWithGithub();
+                } catch (err: any) {
+                  setError(err.message || "Failed to sign in with GitHub.");
+                }
+              }}
               className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-[#24292e] text-white px-5 py-4 text-[14px] font-semibold transition-colors hover:bg-[#2c3137]"
             >
               <Github className="h-5 w-5" />
