@@ -1,7 +1,7 @@
 {
   "framework": "vite",
   "buildCommand": "pnpm run build",
-  "outputDirectory": "artifacts/momentum-job-tracker/dist",
+  "outputDirectory": "artifacts/momentum-job-tracker/dist/public",
   "rewrites": [
     {
       "source": "/(.*)",
