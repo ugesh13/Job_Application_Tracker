@@ -176,9 +176,9 @@ export default function HomePage() {
           <div className="pointer-events-none absolute left-1/2 -top-24 -translate-x-1/2 h-[450px] w-full max-w-4xl rounded-full bg-cyan-500/[0.08] blur-[140px]" />
 
           {/* Large Cinematic Brand Header */}
-          <div className="relative z-20 inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-[#06101e]/80 px-4 py-1 text-[11px] font-mono-ui uppercase tracking-[0.22em] text-cyan-300 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
-            <span>AI Career Operating System</span>
+          <div className="relative z-20 inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-[#06101e]/80 px-3.5 py-1.5 text-xs font-mono-ui uppercase tracking-widest text-cyan-300 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" aria-hidden="true" />
+            <span className="font-medium">AI Career Operating System</span>
           </div>
 
           {/* Big Cinematic Brand Display Typography */}
@@ -218,12 +218,12 @@ export default function HomePage() {
           </div>
 
           {/* Subtle Cosmic Status Indicator */}
-          <div className="relative z-20 mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[12px] font-mono-ui uppercase tracking-wider text-slate-400">
-            <span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-cyan-400" /> 8 Career Intelligence Vectors</span>
-            <span className="hidden sm:inline text-slate-600">•</span>
-            <span className="hidden sm:flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Verifiable Proof Engine</span>
-            <span className="hidden sm:inline text-slate-600">•</span>
-            <span className="hidden sm:flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-sky-400" /> Real-time Market Fit</span>
+          <div className="relative z-20 mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-mono-ui text-slate-300">
+            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-cyan-400" aria-hidden="true" /> 8 Career Intelligence Vectors</span>
+            <span className="hidden sm:inline text-slate-600" aria-hidden="true">•</span>
+            <span className="hidden sm:flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" /> Verifiable Proof Engine</span>
+            <span className="hidden sm:inline text-slate-600" aria-hidden="true">•</span>
+            <span className="hidden sm:flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-400" aria-hidden="true" /> Real-Time Market Fit</span>
           </div>
         </section>
 
@@ -301,24 +301,26 @@ export default function HomePage() {
           ========================================================================= */}
       <section className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <div className="text-[11px] font-mono-ui uppercase tracking-widest text-cyan-400 font-semibold">
+          <div className="max-w-2xl">
+            <div className="text-xs font-mono-ui uppercase tracking-widest text-cyan-400 font-semibold">
               03 — Digital Twin Architecture
             </div>
-            <h2 className="mt-1 font-display text-[30px] sm:text-[40px] font-bold text-white tracking-tight">
+            <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Your Career Twin
             </h2>
-            <p className="mt-1 text-[14px] text-slate-400 max-w-xl">
+            <p className="mt-2 text-sm text-slate-300 leading-relaxed">
               An evidence-grounded computational model reflecting what you know, what you can prove in production, and what you could become next.
             </p>
+            <div className="mt-3.5">
+              <Link
+                href="/career-intelligence"
+                className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/20 px-4 py-2 text-xs font-bold text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition w-fit"
+              >
+                <span>Open Full Twin</span>
+                <ChevronRight size={14} aria-hidden="true" />
+              </Link>
+            </div>
           </div>
-          <Link
-            href="/career-intelligence"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[12px] font-bold text-slate-200 hover:border-cyan-500/40 hover:text-cyan-300 transition w-fit"
-          >
-            <span>Open Full Twin</span>
-            <ChevronRight size={14} />
-          </Link>
         </div>
 
         {/* Visual Twin Capability Matrix */}
@@ -417,22 +419,32 @@ export default function HomePage() {
           {/* 05 — Career Opportunity Graph */}
           <div className="rounded-3xl border border-white/[0.07] bg-[#070F1B]/60 p-7 sm:p-8 backdrop-blur-xl flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-2 text-[11px] font-mono-ui uppercase tracking-wider text-cyan-400 font-semibold">
-                <GitBranch size={14} /> 05 — Opportunity Graph
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 text-xs font-mono-ui uppercase tracking-wider text-cyan-400 font-semibold">
+                  <GitBranch size={14} aria-hidden="true" /> 05 — Opportunity Graph
+                </div>
+                <Link
+                  href="/career-intelligence"
+                  aria-label="Open Interactive Graph Explorer"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
+                >
+                  <span>Open Explorer</span>
+                  <ArrowRight size={13} aria-hidden="true" />
+                </Link>
               </div>
-              <h3 className="mt-2 font-display text-[26px] font-bold text-white tracking-tight">
+              <h3 className="mt-2 font-display text-2xl font-bold text-white tracking-tight">
                 Capability-to-Role Pipeline
               </h3>
-              <p className="mt-1 text-[13px] text-slate-400">
+              <p className="mt-1 text-sm text-slate-300">
                 How your proven skills branch into production capabilities and open market trajectories.
               </p>
 
               {/* Visual Connected Pipeline */}
-              <div className="mt-6 space-y-3 font-mono-ui text-[12px]">
+              <div className="mt-6 space-y-3 font-mono-ui text-xs">
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-500/15 text-cyan-400 text-[10px]">1</span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-500/15 text-cyan-400 text-xs font-bold">1</span>
                   <div className="flex-1">
-                    <span className="text-slate-400 text-[10px] block uppercase">Current Verified Layer</span>
+                    <span className="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Current Verified Layer</span>
                     <span className="text-slate-100 font-bold">TypeScript · React · PostgreSQL</span>
                   </div>
                 </div>
@@ -442,9 +454,9 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-sky-500/15 text-sky-400 text-[10px]">2</span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-sky-500/15 text-sky-400 text-xs font-bold">2</span>
                   <div className="flex-1">
-                    <span className="text-slate-400 text-[10px] block uppercase">Activated Capabilities</span>
+                    <span className="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Activated Capabilities</span>
                     <span className="text-slate-100 font-bold">API Platforming · Reactive Interfaces · State Sync</span>
                   </div>
                 </div>
@@ -454,23 +466,13 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-400 text-slate-950 text-[10px] font-bold">3</span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-400 text-slate-950 text-xs font-bold">3</span>
                   <div className="flex-1">
-                    <span className="text-cyan-300 text-[10px] block uppercase">Target Market Roles</span>
+                    <span className="text-cyan-300 text-xs font-semibold block uppercase tracking-wider">Target Market Roles</span>
                     <span className="text-white font-bold">Full Stack Engineer · Product Systems Architect</span>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-white/[0.06] text-right">
-              <Link
-                href="/career-intelligence"
-                className="text-[12px] font-bold text-cyan-400 hover:text-cyan-300 inline-flex items-center gap-1.5"
-              >
-                <span>Interactive Graph Explorer</span>
-                <ArrowRight size={14} />
-              </Link>
             </div>
           </div>
         </div>
@@ -621,10 +623,28 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-white/[0.06] text-right">
-                    <span className="text-[11px] font-bold text-cyan-400 group-hover:underline">
-                      {active ? 'Selected Direction ✓' : 'Explore Scenario →'}
-                    </span>
+                  <div className="mt-6 pt-4 border-t border-white/[0.06]">
+                    <button
+                      type="button"
+                      aria-pressed={active}
+                      className={`w-full flex items-center justify-center gap-2 rounded-xl py-2 px-3 text-xs font-bold transition-all ${
+                        active
+                          ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
+                          : 'border border-white/10 bg-white/[0.03] text-slate-300 hover:border-cyan-500/40 hover:text-white'
+                      }`}
+                    >
+                      {active ? (
+                        <>
+                          <Check size={14} className="stroke-[3]" aria-hidden="true" />
+                          <span>Selected Direction</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Explore Scenario</span>
+                          <ArrowRight size={14} aria-hidden="true" />
+                        </>
+                      )}
+                    </button>
                   </div>
                 </div>
               );
@@ -634,24 +654,27 @@ export default function HomePage() {
 
         {/* 08 — Reverse Job Search */}
         <div className="rounded-3xl border border-white/[0.07] bg-[#070F1B]/60 p-7 sm:p-10 backdrop-blur-xl">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 text-[11px] font-mono-ui uppercase tracking-widest text-cyan-400 font-semibold">
-                <Compass size={14} /> 08 — Reverse Discovery
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-2 text-xs font-mono-ui uppercase tracking-widest text-cyan-400 font-semibold">
+                <Compass size={14} aria-hidden="true" /> 08 — Reverse Discovery
               </div>
-              <h3 className="mt-1 font-display text-[26px] sm:text-[32px] font-bold text-white tracking-tight">
+              <h3 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 What Jobs Are Looking for Someone Like You?
               </h3>
-              <p className="mt-1 text-[13px] text-slate-400 max-w-xl">
+              <p className="mt-2 text-sm text-slate-300 leading-relaxed">
                 Instead of searching titles blindly, our engine queries market postings seeking your verified project evidence.
               </p>
+              <div className="mt-3.5">
+                <Link
+                  href="/search"
+                  className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/20 px-4 py-2 text-xs font-bold text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 transition w-fit"
+                >
+                  <span>Browse All Roles</span>
+                  <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </div>
             </div>
-            <Link
-              href="/search"
-              className="rounded-full bg-white/[0.06] border border-white/10 px-5 py-2 text-[12px] font-bold text-slate-200 hover:text-white transition w-fit"
-            >
-              Browse All Roles →
-            </Link>
           </div>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -768,14 +791,22 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* View Switcher: Timeline vs Kanban */}
-            <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-black/40 p-1 w-fit">
+            {/* View Switcher: Timeline vs Kanban (Segmented Control) */}
+            <div
+              role="tablist"
+              aria-label="Application pipeline view"
+              className="inline-flex items-center rounded-full border border-white/10 bg-[#050A14] p-1 shadow-inner w-fit"
+            >
               <button
                 type="button"
+                role="tab"
+                id="tab-timeline"
+                aria-selected={trackerTab === 'timeline'}
+                aria-controls="applications-panel"
                 onClick={() => setTrackerTab('timeline')}
-                className={`rounded-full px-4 py-1.5 text-[12px] font-bold transition ${
+                className={`rounded-full px-4 py-1.5 text-xs font-bold transition-all ${
                   trackerTab === 'timeline'
-                    ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.4)]'
+                    ? 'bg-cyan-500 text-slate-950 shadow-[0_0_12px_rgba(6,182,212,0.4)]'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -783,10 +814,14 @@ export default function HomePage() {
               </button>
               <button
                 type="button"
+                role="tab"
+                id="tab-kanban"
+                aria-selected={trackerTab === 'kanban'}
+                aria-controls="applications-panel"
                 onClick={() => setTrackerTab('kanban')}
-                className={`rounded-full px-4 py-1.5 text-[12px] font-bold transition ${
+                className={`rounded-full px-4 py-1.5 text-xs font-bold transition-all ${
                   trackerTab === 'kanban'
-                    ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.4)]'
+                    ? 'bg-cyan-500 text-slate-950 shadow-[0_0_12px_rgba(6,182,212,0.4)]'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -797,66 +832,93 @@ export default function HomePage() {
 
           {/* Timeline View (The new requested design) */}
           {trackerTab === 'timeline' ? (
-            <div className="mt-10 space-y-8">
-              {timelineStages.map((stageKey) => {
-                const stageJobs = jobs.filter((j) => j.stage === stageKey);
-                const stageTitle = stages.find((s) => s.id === stageKey)?.label || stageKey;
-                const isOffered = stageKey === 'offer';
-                const isRejected = stageKey === 'rejected';
+            jobs.length === 0 ? (
+              <div className="mt-8 rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-400">
+                  <BriefcaseBusiness size={24} aria-hidden="true" />
+                </div>
+                <h3 className="mt-3 text-base font-semibold text-white">No active applications yet</h3>
+                <p className="mt-1 text-sm text-slate-400 max-w-md mx-auto">
+                  Start tracking your job search by adding applications, or browse roles matching your verified skills.
+                </p>
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setIsCreatingJob(true)}
+                    className="inline-flex items-center gap-2 rounded-full bg-cyan-500 px-5 py-2 text-xs font-bold text-slate-950 hover:bg-cyan-400 transition shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+                  >
+                    <Plus size={14} aria-hidden="true" /> Add Application
+                  </button>
+                  <Link
+                    href="/search"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.05] transition"
+                  >
+                    Discover Matching Roles
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div id="applications-panel" role="tabpanel" aria-labelledby="tab-timeline" className="mt-10 space-y-8">
+                {timelineStages.map((stageKey) => {
+                  const stageJobs = jobs.filter((j) => j.stage === stageKey);
+                  const stageTitle = stages.find((s) => s.id === stageKey)?.label || stageKey;
+                  const isOffered = stageKey === 'offer';
+                  const isRejected = stageKey === 'rejected';
 
-                return (
-                  <div key={stageKey} className="relative pl-8 border-l border-white/[0.12] pb-6 last:pb-0">
-                    {/* Glowing Node Beacon on Timeline */}
-                    <div
-                      className={`absolute -left-[9px] top-0 h-4 w-4 rounded-full border-2 transition-all ${
-                        stageJobs.length > 0
-                          ? isOffered
-                            ? 'bg-emerald-400 border-emerald-300 shadow-[0_0_12px_#34d399]'
-                            : isRejected
-                            ? 'bg-rose-500 border-rose-400 shadow-[0_0_12px_#f43f5e]'
-                            : 'bg-cyan-400 border-cyan-300 shadow-[0_0_12px_#22d3ee]'
-                          : 'bg-[#050A14] border-slate-600'
-                      }`}
-                    />
+                  return (
+                    <div key={stageKey} className="relative pl-8 border-l border-white/[0.12] pb-6 last:pb-0">
+                      {/* Glowing Node Beacon on Timeline */}
+                      <div
+                        className={`absolute -left-[9px] top-0 h-4 w-4 rounded-full border-2 transition-all ${
+                          stageJobs.length > 0
+                            ? isOffered
+                              ? 'bg-emerald-400 border-emerald-300 shadow-[0_0_12px_#34d399]'
+                              : isRejected
+                              ? 'bg-rose-500 border-rose-400 shadow-[0_0_12px_#f43f5e]'
+                              : 'bg-cyan-400 border-cyan-300 shadow-[0_0_12px_#22d3ee]'
+                            : 'bg-[#050A14] border-slate-600'
+                        }`}
+                      />
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2.5">
-                        <h3 className="font-bold text-[17px] text-white capitalize">{stageTitle}</h3>
-                        <span className="rounded-full bg-white/[0.06] border border-white/10 px-2 py-0.5 text-[10px] font-mono-ui text-slate-300">
-                          {stageJobs.length}
-                        </span>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2.5">
+                          <h3 className="font-bold text-[17px] text-white capitalize">{stageTitle}</h3>
+                          <span className="rounded-full bg-white/[0.06] border border-white/10 px-2 py-0.5 text-xs font-mono-ui text-slate-300">
+                            {stageJobs.length}
+                          </span>
+                        </div>
                       </div>
+
+                      {stageJobs.length === 0 ? (
+                        <div className="mt-2 text-xs text-slate-500 italic">No roles in this stage.</div>
+                      ) : (
+                        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                          {stageJobs.map((job) => (
+                            <div
+                              key={job.id}
+                              onClick={() => setSelectedJobId(job.id)}
+                              className="cursor-pointer rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 transition-all hover:border-cyan-500/30 hover:bg-[#071324]/60 hover:scale-[1.01]"
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="font-bold text-[14px] text-white truncate">{job.title}</span>
+                                <span className="text-xs text-cyan-400 font-semibold">{job.company}</span>
+                              </div>
+                              <div className="mt-2 text-xs text-slate-400 flex items-center gap-1.5">
+                                <MapPin size={12} /> {job.location || 'Remote'}
+                              </div>
+                              <div className="mt-3 rounded-lg bg-cyan-950/30 border border-cyan-500/20 p-2 text-xs text-slate-300">
+                                <strong className="text-cyan-400">Next: </strong>
+                                {job.nextAction || 'Follow up with recruiter'}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-
-                    {stageJobs.length === 0 ? (
-                      <div className="mt-3 text-[12px] text-slate-500 italic">No roles in this stage.</div>
-                    ) : (
-                      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                        {stageJobs.map((job) => (
-                          <div
-                            key={job.id}
-                            onClick={() => setSelectedJobId(job.id)}
-                            className="cursor-pointer rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 transition-all hover:border-cyan-500/30 hover:bg-[#071324]/60 hover:scale-[1.01]"
-                          >
-                            <div className="flex items-center justify-between">
-                              <span className="font-bold text-[14px] text-white truncate">{job.title}</span>
-                              <span className="text-[11px] text-cyan-400 font-semibold">{job.company}</span>
-                            </div>
-                            <div className="mt-2 text-[12px] text-slate-400 flex items-center gap-1.5">
-                              <MapPin size={12} /> {job.location || 'Remote'}
-                            </div>
-                            <div className="mt-3 rounded-lg bg-cyan-950/30 border border-cyan-500/20 p-2 text-[11px] text-slate-300">
-                              <strong className="text-cyan-400">Next: </strong>
-                              {job.nextAction || 'Follow up with recruiter'}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )
           ) : (
             /* Kanban Board View */
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
