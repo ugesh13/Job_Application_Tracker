@@ -36,6 +36,9 @@ export default defineConfig({
         ]
       : []),
   ],
+  css: {
+    postcss: {},
+  },
   resolve: {
     alias: {
       '@': path.resolve(import.meta.dirname, 'src'),
