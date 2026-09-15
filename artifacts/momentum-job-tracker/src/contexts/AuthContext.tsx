@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { useQueryClient } from "@tanstack/react-query";
 import { auth, googleProvider, githubProvider } from "../lib/firebase";
 import { setAuthTokenGetter } from "@workspace/api-client-react";
 
@@ -28,15 +29,17 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const qc = useQueryClient();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      qc.invalidateQueries();
     });
 
     return unsubscribe;
-  }, []);
+  }, [qc]);
 
   const signInWithGoogle = async () => {
     try {
@@ -59,6 +62,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = async () => {
     try {
       await signOut(auth);
+      qc.clear();
     } catch (error) {
       console.error("Error signing out", error);
       throw error;

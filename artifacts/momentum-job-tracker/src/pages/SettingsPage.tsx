@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   getGetProfileQueryKey,
@@ -64,6 +64,24 @@ export default function SettingsPage() {
     careerGoal: profile.careerGoal || '',
     bio: profile.bio || '',
   });
+
+  // Automatically update form fields as soon as the user's saved profile loads from the database
+  useEffect(() => {
+    if (profileQuery.data) {
+      const p = profileQuery.data as Profile;
+      setProfileForm({
+        name: p.name || '',
+        role: p.role || '',
+        targetRole: p.targetRole || '',
+        location: p.location || '',
+        education: p.education || '',
+        experienceYears: p.experienceYears || 0,
+        careerGoal: p.careerGoal || '',
+        bio: p.bio || '',
+      });
+    }
+  }, [profileQuery.data]);
+
   const [saved, setSaved] = useState(false);
 
   // Skill Form state

@@ -32,11 +32,35 @@ const serializeProfile = (profile: typeof profilesTable.$inferSelect) => ({
 
 router.get("/profile", async (req: AuthenticatedRequest, res): Promise<void> => {
   await ensureProfileSeed();
-  const [profile] = await db.select().from(profilesTable).where(eq(profilesTable.userId, req.user!.uid)).limit(1);
+  let [profile] = await db
+    .select()
+    .from(profilesTable)
+    .where(eq(profilesTable.userId, req.user!.uid))
+    .limit(1);
+
   if (!profile) {
-    res.status(404).json({ error: "Profile not found" });
-    return;
+    const initialName = req.user?.email ? req.user.email.split("@")[0] : "Candidate";
+    const [created] = await db
+      .insert(profilesTable)
+      .values({
+        userId: req.user!.uid,
+        name: initialName,
+        email: req.user?.email || "",
+        role: "Software Professional",
+        targetRole: "Full Stack Engineer",
+        location: "Remote / Hybrid",
+        avatarColor: "#47766c",
+        education: "Bachelor's Degree",
+        experienceYears: 2,
+        careerGoal: "Accelerate career growth into high-impact roles",
+        bio: "",
+      })
+      .onConflictDoNothing()
+      .returning();
+
+    profile = created || (await db.select().from(profilesTable).where(eq(profilesTable.userId, req.user!.uid)).limit(1))[0];
   }
+
   res.json(GetProfileResponse.parse(serializeProfile(profile)));
 });
 
@@ -49,17 +73,29 @@ router.patch("/profile", async (req: AuthenticatedRequest, res): Promise<void> =
   }
   
   const data = parsed.data;
+
+  const updateSet: Record<string, any> = {};
+  if (typeof data.name === "string" && data.name.trim().length > 0) updateSet.name = data.name.trim();
+  if (typeof data.email === "string") updateSet.email = data.email.trim();
+  if (typeof data.role === "string") updateSet.role = data.role.trim();
+  if (typeof data.targetRole === "string") updateSet.targetRole = data.targetRole.trim();
+  if (typeof data.location === "string") updateSet.location = data.location.trim();
+  if (typeof data.avatarColor === "string") updateSet.avatarColor = data.avatarColor;
+  if (data.education !== undefined) updateSet.education = data.education;
+  if (data.experienceYears !== undefined) updateSet.experienceYears = Number(data.experienceYears);
+  if (data.careerGoal !== undefined) updateSet.careerGoal = data.careerGoal;
+  if (data.bio !== undefined) updateSet.bio = data.bio;
   
   const [updated] = await db
     .insert(profilesTable)
     .values({
       userId: req.user!.uid,
-      name: data.name || "User",
-      email: data.email || "",
-      role: data.role || "",
-      targetRole: data.targetRole || "",
-      location: data.location || "",
-      avatarColor: data.avatarColor || "#C88B62",
+      name: (data.name && data.name.trim()) || "Candidate",
+      email: data.email || req.user?.email || "",
+      role: data.role || "Software Professional",
+      targetRole: data.targetRole || "Full Stack Engineer",
+      location: data.location || "Remote",
+      avatarColor: data.avatarColor || "#47766c",
       education: data.education ?? null,
       experienceYears: data.experienceYears ?? 0,
       careerGoal: data.careerGoal ?? null,
@@ -67,18 +103,7 @@ router.patch("/profile", async (req: AuthenticatedRequest, res): Promise<void> =
     })
     .onConflictDoUpdate({
       target: profilesTable.userId,
-      set: {
-        name: data.name ?? undefined,
-        email: data.email ?? undefined,
-        role: data.role ?? undefined,
-        targetRole: data.targetRole ?? undefined,
-        location: data.location ?? undefined,
-        avatarColor: data.avatarColor ?? undefined,
-        education: data.education ?? undefined,
-        experienceYears: data.experienceYears ?? undefined,
-        careerGoal: data.careerGoal ?? undefined,
-        bio: data.bio ?? undefined,
-      },
+      set: Object.keys(updateSet).length > 0 ? updateSet : { name: data.name || "Candidate" },
     })
     .returning();
 
